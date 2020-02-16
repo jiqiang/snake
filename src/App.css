@@ -1,3 +1,32 @@
+.board {
+  border: 1px solid;
+  
+  border-color: gray;
+  outline: none;
+}
+
+.row {
+  display: inline-block;
+}
+
+.cell {
+  width: 20px;
+  height: 20px;
+}
+
+.is-food {
+  background-color: red;
+}
+
+.is-snake {
+  background-color: blue;
+  border-radius: 25px;
+}
+
+.is-wall {
+  background-color: black;
+}
+
 .App {
   text-align: center;
 }

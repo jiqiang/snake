@@ -5,6 +5,14 @@ export enum CellType {
   WALL
 }
 
+export enum Direction {
+  UP,
+  DOWN,
+  LEFT,
+  RIGHT,
+  STAY
+}
+
 export class Cell {
   private row: number;
   private col: number;
@@ -100,7 +108,7 @@ export class Board {
     if (direction === Direction.STAY) {
       return;
     }
-    
+
     let snakeHead = this.snakeCells[this.snakeCells.length - 1];
     let nextSnakeHeadCellRow: number;
     let nextSnakeHeadCellCol: number;
@@ -141,14 +149,6 @@ export class Board {
       this.GenerateFoodCell();
     }
   }
-}
-
-export enum Direction {
-  UP,
-  DOWN,
-  LEFT,
-  RIGHT,
-  STAY
 }
 
 export class Game {

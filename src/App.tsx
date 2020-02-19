@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import { CellType, Board, Cell, Direction } from "./types";
+import { CellType, Board, Cell, Direction, DirectionKeyCodeMap } from "./types";
 import { useInterval } from './hooks';
 
 const board = new Board(30, 30);
@@ -15,12 +15,17 @@ function App() {
     return () => { document.removeEventListener('keydown', handleDirectionChange); }
   });
 
-  const handleDirectionChange = (e: any) => {
+  const handleDirectionChange = (e: KeyboardEvent) => {
     if (e.defaultPrevented) {
       return;
     }
 
-    switch (e.key) {
+    // Do nothing if it is same to previous direction
+    if (DirectionKeyCodeMap[e.code] === direction) {
+      return;
+    }
+
+    switch (e.code) {
       case "Down": // IE/Edge specific value
       case "ArrowDown":
         // Do something for "down arrow" key press.

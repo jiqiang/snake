@@ -13,6 +13,18 @@ export enum Direction {
   STAY
 }
 
+export const DirectionKeyCodeMap: { [keyCode: string]: Direction} = {
+  'ArrowLeft': Direction.LEFT,
+  'ArrowUp': Direction.UP,
+  'ArrowRight': Direction.RIGHT,
+  'ArrowDown': Direction.DOWN,
+  // for IE
+  'Left': Direction.LEFT,
+  'Up': Direction.UP,
+  'Right': Direction.RIGHT,
+  'Down': Direction.DOWN
+};
+
 export class Cell {
   private row: number;
   private col: number;

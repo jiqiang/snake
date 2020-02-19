@@ -7,17 +7,13 @@ const board = new Board(30, 30);
 
 function App() {
 
-  const [cells, setCells] = useState<Cell[][]>([]);
+  const [cells, setCells] = useState<Cell[][]>(board.GetCells());
   const [direction, setDirection] = useState<Direction>(Direction.STAY);
 
   useEffect(() => {
     document.addEventListener('keydown', handleDirectionChange);
     return () => { document.removeEventListener('keydown', handleDirectionChange); }
   });
-
-  useEffect(() => {
-    setCells(board.GetCells());
-  }, []);
 
   const handleDirectionChange = (e: any) => {
     if (e.defaultPrevented) {

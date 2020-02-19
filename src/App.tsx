@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import { CellType, Board, Cell, Direction } from "./types";
 import { useInterval } from './hooks';
@@ -9,14 +9,17 @@ function App() {
 
   const [cells, setCells] = useState<Cell[][]>([]);
   const [direction, setDirection] = useState<Direction>(Direction.STAY);
-  const boardEl = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    boardEl.current?.focus();
+    document.addEventListener('keydown', handleDirectionChange);
+    return () => { document.removeEventListener('keydown', handleDirectionChange); }
+  });
+
+  useEffect(() => {
     setCells(board.GetCells());
   }, []);
 
-  const handleDirectionChange = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  const handleDirectionChange = (e: any) => {
     if (e.defaultPrevented) {
       return;
     }
@@ -75,7 +78,7 @@ function App() {
 
   return (
     <>
-      <div tabIndex={0} className="board" onKeyDown={handleDirectionChange} ref={boardEl}>
+      <div tabIndex={0} className="board">
         {cells.map((row, rowIdx) => (
           <div className="row" key={rowIdx}>
             {row.map((cell, colIdx) => (

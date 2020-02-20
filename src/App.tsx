@@ -8,7 +8,8 @@ const board = new Board(30, 30);
 function App() {
 
   const [cells, setCells] = useState<Cell[][]>(board.GetCells());
-  const [direction, setDirection] = useState<Direction>(Direction.STAY);
+  const [direction, setDirection] = useState<Direction | undefined>(undefined);
+  const [delay, setDelay] = useState<number | undefined>(undefined);
 
   useEffect(() => {
     document.addEventListener('keydown', handleDirectionChange);
@@ -16,6 +17,10 @@ function App() {
   });
 
   const handleDirectionChange = (e: KeyboardEvent) => {
+    if (delay === undefined) {
+      setDelay(100);
+    }
+
     if (e.defaultPrevented) {
       return;
     }
@@ -60,12 +65,13 @@ function App() {
   };
 
   useInterval(() => {
+    console.log('tick');
     board.MoveSnake(direction);
     if (board.IsGameOver()) {
-      return;
+      setDelay(undefined);
     }
     setCells([...board.GetCells()]);
-  }, 100);
+  }, delay);
 
   return (
     <>

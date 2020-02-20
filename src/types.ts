@@ -9,8 +9,7 @@ export enum Direction {
   UP,
   DOWN,
   LEFT,
-  RIGHT,
-  STAY
+  RIGHT
 };
 
 export const DirectionKeyCodeMap: { [keyCode: string]: Direction } = {
@@ -128,8 +127,8 @@ export class Board {
     this.cells[this.foodCell.GetRow()][this.foodCell.GetCol()].SetCellType(CellType.FOOD);
   }
 
-  public MoveSnake(direction: Direction) {
-    if (direction === Direction.STAY) {
+  public MoveSnake(direction: Direction | undefined) {
+    if (direction === undefined) {
       return;
     }
 

@@ -5,7 +5,7 @@ import { useInterval } from './hooks';
 
 const board = new Board(30, 30);
 
-function App() {
+const App = () => {
 
   const [cells, setCells] = useState<Cell[][]>(board.GetCells());
   const [direction, setDirection] = useState<Direction | undefined>(undefined);
@@ -17,6 +17,10 @@ function App() {
   });
 
   const handleDirectionChange = (e: KeyboardEvent) => {
+    if (board.IsGameOver()) {
+      return;
+    }
+
     if (delay === undefined) {
       setDelay(100);
     }
@@ -75,7 +79,7 @@ function App() {
 
   return (
     <>
-      <div tabIndex={0} className="board">
+      <div className="board">
         {cells.map((row, rowIdx) => (
           <div className="row" key={rowIdx}>
             {row.map((cell, colIdx) => (

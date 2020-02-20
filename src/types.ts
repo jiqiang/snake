@@ -3,7 +3,7 @@ export enum CellType {
   FOOD,
   SNAKE,
   WALL
-}
+};
 
 export enum Direction {
   UP,
@@ -11,9 +11,9 @@ export enum Direction {
   LEFT,
   RIGHT,
   STAY
-}
+};
 
-export const DirectionKeyCodeMap: { [keyCode: string]: Direction} = {
+export const DirectionKeyCodeMap: { [keyCode: string]: Direction } = {
   'ArrowLeft': Direction.LEFT,
   'ArrowUp': Direction.UP,
   'ArrowRight': Direction.RIGHT,
@@ -23,6 +23,18 @@ export const DirectionKeyCodeMap: { [keyCode: string]: Direction} = {
   'Up': Direction.UP,
   'Right': Direction.RIGHT,
   'Down': Direction.DOWN
+};
+
+export const OppsiteDirectionKeyCodeMap: { [keyCode: string]: Direction } = {
+  'ArrowLeft': Direction.RIGHT,
+  'ArrowUp': Direction.DOWN,
+  'ArrowRight': Direction.LEFT,
+  'ArrowDown': Direction.UP,
+  // for IE
+  'Left': Direction.RIGHT,
+  'Up': Direction.DOWN,
+  'Right': Direction.LEFT,
+  'Down': Direction.UP
 };
 
 export class Cell {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import { CellType, Board, Cell, Direction, DirectionKeyCodeMap } from "./types";
+import { CellType, Board, Cell, Direction, DirectionKeyCodeMap, OppsiteDirectionKeyCodeMap } from "./types";
 import { useInterval } from './hooks';
 
 const board = new Board(30, 30);
@@ -25,41 +25,31 @@ function App() {
       return;
     }
 
+    // Do nothin if previous direction is oppsite direction of current one
+    if (OppsiteDirectionKeyCodeMap[e.code] === direction) {
+      return;
+    }
+
     switch (e.code) {
       case "Down": // IE/Edge specific value
       case "ArrowDown":
         // Do something for "down arrow" key press.
-        setDirection(prevDirection => {
-          return prevDirection === Direction.UP ? Direction.UP : Direction.DOWN;
-        });
+        setDirection(Direction.DOWN);
         break;
       case "Up": // IE/Edge specific value
       case "ArrowUp":
         // Do something for "up arrow" key press.
-        setDirection(prevDirection => {
-          return prevDirection === Direction.DOWN ? Direction.DOWN : Direction.UP;
-        });
+        setDirection(Direction.UP);
         break;
       case "Left": // IE/Edge specific value
       case "ArrowLeft":
         // Do something for "left arrow" key press.
-        setDirection(prevDirection => {
-          return prevDirection === Direction.RIGHT ? Direction.RIGHT : Direction.LEFT;
-        });
+        setDirection(Direction.LEFT);
         break;
       case "Right": // IE/Edge specific value
       case "ArrowRight":
         // Do something for "right arrow" key press.
-        setDirection(prevDirection => {
-          return prevDirection === Direction.LEFT ? Direction.LEFT : Direction.RIGHT;
-        });
-        break;
-      case "Enter":
-        // Do something for "enter" or "return" key press.
-        break;
-      case "Esc": // IE/Edge specific value
-      case "Escape":
-        // Do something for "esc" key press.
+        setDirection(Direction.RIGHT);
         break;
       default:
         return; // Quit when this doesn't handle the key event.

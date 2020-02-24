@@ -75,7 +75,11 @@ const App = () => {
       setDelay(undefined);
     }
     setCells([...board.GetCells()]);
+<<<<<<< HEAD
   }, delay);
+=======
+  }, 200);
+>>>>>>> increase time interval
 
   return (
     <>

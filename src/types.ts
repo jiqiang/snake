@@ -79,7 +79,6 @@ export class Board {
     this.isGameOver = false;
 
     this.Initialize();
-    this.SetSnakeCells();
     this.GenerateFoodCell();
   }
 
@@ -88,15 +87,10 @@ export class Board {
       this.cells[row] = [];
       for (let col = 0; col < this.colCount; col++) {
         const isWallCell = [0, this.rowCount - 1].includes(row) || [0, this.rowCount - 1].includes(col);
-        this.cells[row][col] = new Cell(row, col, isWallCell ? CellType.WALL : CellType.EMPTY);
+        const isSnakeCell = row === 2 && col === 2;
+        this.cells[row][col] = new Cell(row, col, isWallCell ? CellType.WALL : (isSnakeCell ? CellType.SNAKE : CellType.EMPTY));
       }
     }
-  }
-
-  public SetSnakeCells(): void {
-    this.snakeCells.forEach((cell) => {
-      this.cells[cell.GetRow()][cell.GetCol()].SetCellType(CellType.SNAKE);
-    });
   }
 
   public GetCells(): Cell[][] {

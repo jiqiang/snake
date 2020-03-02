@@ -173,24 +173,3 @@ export class Board {
     }
   }
 }
-
-export class Game {
-  private board: Board;
-  private direction: Direction | undefined;
-
-  constructor(board: Board) {
-    this.board = board;
-  }
-
-  public GetBoard(): Board {
-    return this.board;
-  }
-
-  public SetDirection(direction: Direction): void {
-    this.direction = direction;
-  }
-
-  public GetDirection(): Direction | undefined {
-    return this.direction;
-  }
-}

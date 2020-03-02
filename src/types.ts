@@ -103,9 +103,6 @@ export class Board {
   }
 
   public GetCells(): Cell[][] {
-    this.Initialize();
-    this.SetSnakeCells();
-    this.SetFoodCell();
     return this.cells;
   }
 
@@ -121,10 +118,7 @@ export class Board {
       col = Math.floor(Math.random() * (this.colCount - 1));
     }
     this.foodCell = new Cell(row, col, CellType.FOOD);
-  }
-
-  public SetFoodCell(): void {
-    this.cells[this.foodCell.GetRow()][this.foodCell.GetCol()].SetCellType(CellType.FOOD);
+    this.cells[row][col].SetCellType(CellType.FOOD);
   }
 
   public MoveSnake(direction: Direction | undefined) {
@@ -165,9 +159,15 @@ export class Board {
     }
 
     if (this.cells[nextSnakeHeadCellRow][nextSnakeHeadCellCol].GetCellType() !== CellType.FOOD) {
+      this.cells[nextSnakeHeadCellRow][nextSnakeHeadCellCol].SetCellType(CellType.SNAKE);
       this.snakeCells.push(new Cell(nextSnakeHeadCellRow, nextSnakeHeadCellCol));
-      this.snakeCells.shift();
+      
+      const snakeTailCell = this.snakeCells.shift();
+      if (snakeTailCell) {
+        this.cells[snakeTailCell.GetRow()][snakeTailCell.GetCol()].SetCellType(CellType.EMPTY);
+      }
     } else {
+      this.cells[nextSnakeHeadCellRow][nextSnakeHeadCellCol].SetCellType(CellType.SNAKE);
       this.snakeCells.push(new Cell(nextSnakeHeadCellRow, nextSnakeHeadCellCol));
       this.GenerateFoodCell();
     }

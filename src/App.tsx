@@ -92,7 +92,7 @@ const App = () => {
           </div>
         ))}
       </div>
-      <h1>{board.GetScore()}</h1>
+      <h1>Score: {board.GetScore()}</h1>
     </>
   );
 }

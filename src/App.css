@@ -1,8 +1,7 @@
 .board {
-  border: 1px solid;
-
   border-color: gray;
   outline: none;
+  text-align: center;
 }
 
 .row {
@@ -25,4 +24,8 @@
 
 .is-wall {
   background-color: black;
+}
+
+h1 {
+  text-align: center;
 }

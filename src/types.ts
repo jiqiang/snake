@@ -70,6 +70,7 @@ export class Board {
   private cells: Cell[][];
   private snakeCells: Cell[];
   private isGameOver: boolean;
+  private score: number;
 
   constructor(rowCount: number, colCount: number) {
     this.rowCount = rowCount;
@@ -77,6 +78,7 @@ export class Board {
     this.cells = [];
     this.snakeCells = [new Cell(2, 2)];
     this.isGameOver = false;
+    this.score = 0;
 
     this.Initialize();
     this.GenerateFoodCell();
@@ -91,6 +93,10 @@ export class Board {
         this.cells[row][col] = new Cell(row, col, isWallCell ? CellType.WALL : (isSnakeCell ? CellType.SNAKE : CellType.EMPTY));
       }
     }
+  }
+
+  public GetScore(): number {
+    return this.score;
   }
 
   public GetCells(): Cell[][] {
@@ -160,6 +166,7 @@ export class Board {
       this.cells[nextSnakeHeadCellRow][nextSnakeHeadCellCol].SetCellType(CellType.SNAKE);
       this.snakeCells.push(new Cell(nextSnakeHeadCellRow, nextSnakeHeadCellCol));
       this.GenerateFoodCell();
+      this.score++;
     }
   }
 }

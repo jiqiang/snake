@@ -81,9 +81,9 @@ const App = () => {
     <>
       <div className="board">
         {cells.map((row, rowIdx) => (
-          <div className="row" key={rowIdx}>
+          <div className="row" key={`row-${rowIdx}`}>
             {row.map((cell, colIdx) => (
-              <div className="col" key={colIdx}>
+              <div className="col" key={`col-${colIdx}`}>
                 <div
                   className={`cell ${cell.GetCellType() === CellType.FOOD && "is-food"} ${cell.GetCellType() === CellType.SNAKE && "is-snake"} ${cell.GetCellType() === CellType.WALL && "is-wall"}`}
                 ></div>
@@ -92,6 +92,7 @@ const App = () => {
           </div>
         ))}
       </div>
+      <h1>{board.GetScore()}</h1>
     </>
   );
 }

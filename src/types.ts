@@ -70,8 +70,6 @@ export class Board {
   private cells: Cell[][];
   private snakeCells: Cell[];
   private isGameOver: boolean;
-  private foodCell: Cell;
-
 
   constructor(rowCount: number, colCount: number) {
     this.rowCount = rowCount;
@@ -79,7 +77,6 @@ export class Board {
     this.cells = [];
     this.snakeCells = [new Cell(2, 2)];
     this.isGameOver = false;
-    this.foodCell = new Cell(1, 1);
 
     this.Initialize();
     this.SetSnakeCells();
@@ -117,7 +114,6 @@ export class Board {
       row = Math.floor(Math.random() * (this.rowCount - 1));
       col = Math.floor(Math.random() * (this.colCount - 1));
     }
-    this.foodCell = new Cell(row, col, CellType.FOOD);
     this.cells[row][col].SetCellType(CellType.FOOD);
   }
 

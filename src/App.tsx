@@ -10,11 +10,41 @@ const App = () => {
   const [cells, setCells] = useState<Cell[][]>(board.GetCells());
   const [direction, setDirection] = useState<Direction | undefined>(undefined);
   const [delay, setDelay] = useState<number | undefined>(undefined);
+  const [touchStart, setTouchStart] = useState<[number, number]>([0, 0]);
 
   useEffect(() => {
     document.addEventListener('keydown', handleDirectionChange);
-    return () => { document.removeEventListener('keydown', handleDirectionChange); }
+    document.addEventListener('touchstart', handleTouchStart);
+    document.addEventListener('touchend', handleTouchEnd);
+    return () => { 
+      document.removeEventListener('keydown', handleDirectionChange); 
+      document.removeEventListener('touchstart', handleTouchStart);
+      document.removeEventListener('touchend', handleTouchEnd); 
+    }
   });
+
+  const handleTouchStart = (e: TouchEvent) => {
+    setTouchStart([e.touches[0].clientX, e.touches[0].clientY]);
+  };
+
+  const handleTouchEnd = (e: TouchEvent) => {
+    const horizontalDistance = e.changedTouches[0].clientX - touchStart[0];
+    const verticalDistance = e.changedTouches[0].clientY - touchStart[1];
+
+    if (Math.abs(horizontalDistance) <= Math.abs(verticalDistance)) {
+      if (verticalDistance <= 0) {
+        document.dispatchEvent(new KeyboardEvent('keydown', {'code': 'ArrowUp'}));
+      } else {
+        document.dispatchEvent(new KeyboardEvent('keydown', {'code': 'ArrowDown'}));
+      }
+    } else {
+      if (horizontalDistance <= 0) {
+        document.dispatchEvent(new KeyboardEvent('keydown', {'code': 'ArrowLeft'}));
+      } else {
+        document.dispatchEvent(new KeyboardEvent('keydown', {'code': 'ArrowRight'}));
+      }
+    }
+  };
 
   const handleDirectionChange = (e: KeyboardEvent) => {
     if (board.IsGameOver()) {
@@ -79,6 +109,7 @@ const App = () => {
 
   return (
     <>
+      <h3>Scores: {board.GetScore()}</h3>
       <div className="board">
         {cells.map((row, rowIdx) => (
           <div className="row" key={`row-${rowIdx}`}>
@@ -92,7 +123,7 @@ const App = () => {
           </div>
         ))}
       </div>
-      <h1>Score: {board.GetScore()}</h1>
+
     </>
   );
 }

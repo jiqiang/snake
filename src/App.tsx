@@ -16,10 +16,10 @@ const App = () => {
     document.addEventListener('keydown', handleDirectionChange);
     document.addEventListener('touchstart', handleTouchStart);
     document.addEventListener('touchend', handleTouchEnd);
-    return () => { 
-      document.removeEventListener('keydown', handleDirectionChange); 
+    return () => {
+      document.removeEventListener('keydown', handleDirectionChange);
       document.removeEventListener('touchstart', handleTouchStart);
-      document.removeEventListener('touchend', handleTouchEnd); 
+      document.removeEventListener('touchend', handleTouchEnd);
     }
   });
 
@@ -33,15 +33,15 @@ const App = () => {
 
     if (Math.abs(horizontalDistance) <= Math.abs(verticalDistance)) {
       if (verticalDistance <= 0) {
-        document.dispatchEvent(new KeyboardEvent('keydown', {'code': 'ArrowUp'}));
+        document.dispatchEvent(new KeyboardEvent('keydown', { 'code': 'ArrowUp' }));
       } else {
-        document.dispatchEvent(new KeyboardEvent('keydown', {'code': 'ArrowDown'}));
+        document.dispatchEvent(new KeyboardEvent('keydown', { 'code': 'ArrowDown' }));
       }
     } else {
       if (horizontalDistance <= 0) {
-        document.dispatchEvent(new KeyboardEvent('keydown', {'code': 'ArrowLeft'}));
+        document.dispatchEvent(new KeyboardEvent('keydown', { 'code': 'ArrowLeft' }));
       } else {
-        document.dispatchEvent(new KeyboardEvent('keydown', {'code': 'ArrowRight'}));
+        document.dispatchEvent(new KeyboardEvent('keydown', { 'code': 'ArrowRight' }));
       }
     }
   };

@@ -2,6 +2,8 @@
   border-color: gray;
   outline: none;
   text-align: center;
+  touch-action: none;
+  -ms-touch-action: none;
 }
 
 .row {

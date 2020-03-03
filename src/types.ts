@@ -157,7 +157,7 @@ export class Board {
     if (this.cells[nextSnakeHeadCellRow][nextSnakeHeadCellCol].GetCellType() !== CellType.FOOD) {
       this.cells[nextSnakeHeadCellRow][nextSnakeHeadCellCol].SetCellType(CellType.SNAKE);
       this.snakeCells.push(new Cell(nextSnakeHeadCellRow, nextSnakeHeadCellCol));
-      
+
       const snakeTailCell = this.snakeCells.shift();
       if (snakeTailCell) {
         this.cells[snakeTailCell.GetRow()][snakeTailCell.GetCol()].SetCellType(CellType.EMPTY);

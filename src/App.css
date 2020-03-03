@@ -31,3 +31,11 @@
 h3 {
   text-align: center;
 }
+
+.restart {
+  text-align: center;
+}
+
+button {
+  border: 1px solid grey;
+}

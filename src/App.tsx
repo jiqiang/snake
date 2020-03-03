@@ -3,7 +3,7 @@ import "./App.css";
 import { CellType, Board, Cell, Direction, DirectionKeyCodeMap, OppsiteDirectionKeyCodeMap } from "./types";
 import { useInterval } from './hooks';
 
-const board = new Board(30, 30);
+let board = new Board(30, 30);
 
 const App = () => {
 
@@ -107,6 +107,14 @@ const App = () => {
     setCells([...board.GetCells()]);
   }, delay);
 
+  const handleRestart = () => {
+    board = new Board(30, 30);
+    setCells(board.GetCells());
+    setDirection(undefined);
+    setDelay(undefined);
+    setTouchStart([0, 0]);
+  };
+
   return (
     <>
       <h3>Scores: {board.GetScore()}</h3>
@@ -123,7 +131,7 @@ const App = () => {
           </div>
         ))}
       </div>
-
+      <div className="restart" onClick={handleRestart}><button>Restart</button></div>
     </>
   );
 }

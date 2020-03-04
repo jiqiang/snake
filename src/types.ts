@@ -3,37 +3,37 @@ export enum CellType {
   FOOD,
   SNAKE,
   WALL
-};
+}
 
 export enum Direction {
   UP,
   DOWN,
   LEFT,
   RIGHT
-};
+}
 
 export const DirectionKeyCodeMap: { [keyCode: string]: Direction } = {
-  'ArrowLeft': Direction.LEFT,
-  'ArrowUp': Direction.UP,
-  'ArrowRight': Direction.RIGHT,
-  'ArrowDown': Direction.DOWN,
+  ArrowLeft: Direction.LEFT,
+  ArrowUp: Direction.UP,
+  ArrowRight: Direction.RIGHT,
+  ArrowDown: Direction.DOWN,
   // for IE
-  'Left': Direction.LEFT,
-  'Up': Direction.UP,
-  'Right': Direction.RIGHT,
-  'Down': Direction.DOWN
+  Left: Direction.LEFT,
+  Up: Direction.UP,
+  Right: Direction.RIGHT,
+  Down: Direction.DOWN
 };
 
 export const OppsiteDirectionKeyCodeMap: { [keyCode: string]: Direction } = {
-  'ArrowLeft': Direction.RIGHT,
-  'ArrowUp': Direction.DOWN,
-  'ArrowRight': Direction.LEFT,
-  'ArrowDown': Direction.UP,
+  ArrowLeft: Direction.RIGHT,
+  ArrowUp: Direction.DOWN,
+  ArrowRight: Direction.LEFT,
+  ArrowDown: Direction.UP,
   // for IE
-  'Left': Direction.RIGHT,
-  'Up': Direction.DOWN,
-  'Right': Direction.LEFT,
-  'Down': Direction.UP
+  Left: Direction.RIGHT,
+  Up: Direction.DOWN,
+  Right: Direction.LEFT,
+  Down: Direction.UP
 };
 
 export class Cell {
@@ -88,9 +88,19 @@ export class Board {
     for (let row = 0; row < this.rowCount; row++) {
       this.cells[row] = [];
       for (let col = 0; col < this.colCount; col++) {
-        const isWallCell = [0, this.rowCount - 1].includes(row) || [0, this.rowCount - 1].includes(col);
+        const isWallCell =
+          [0, this.rowCount - 1].includes(row) ||
+          [0, this.rowCount - 1].includes(col);
         const isSnakeCell = row === 2 && col === 2;
-        this.cells[row][col] = new Cell(row, col, isWallCell ? CellType.WALL : (isSnakeCell ? CellType.SNAKE : CellType.EMPTY));
+        this.cells[row][col] = new Cell(
+          row,
+          col,
+          isWallCell
+            ? CellType.WALL
+            : isSnakeCell
+            ? CellType.SNAKE
+            : CellType.EMPTY
+        );
       }
     }
   }
@@ -110,7 +120,11 @@ export class Board {
   public GenerateFoodCell(): void {
     let row = Math.floor(Math.random() * (this.rowCount - 1));
     let col = Math.floor(Math.random() * (this.colCount - 1));
-    while ([CellType.WALL, CellType.SNAKE].includes(this.cells[row][col].GetCellType())) {
+    while (
+      [CellType.WALL, CellType.SNAKE].includes(
+        this.cells[row][col].GetCellType()
+      )
+    ) {
       row = Math.floor(Math.random() * (this.rowCount - 1));
       col = Math.floor(Math.random() * (this.colCount - 1));
     }
@@ -148,23 +162,38 @@ export class Board {
         nextSnakeHeadCellCol = snakeHead.GetCol();
     }
 
-    const nextCellType = this.cells[nextSnakeHeadCellRow][nextSnakeHeadCellCol].GetCellType()
+    const nextCellType = this.cells[nextSnakeHeadCellRow][
+      nextSnakeHeadCellCol
+    ].GetCellType();
     if ([CellType.WALL, CellType.SNAKE].includes(nextCellType)) {
       this.isGameOver = true;
       return;
     }
 
-    if (this.cells[nextSnakeHeadCellRow][nextSnakeHeadCellCol].GetCellType() !== CellType.FOOD) {
-      this.cells[nextSnakeHeadCellRow][nextSnakeHeadCellCol].SetCellType(CellType.SNAKE);
-      this.snakeCells.push(new Cell(nextSnakeHeadCellRow, nextSnakeHeadCellCol));
+    if (
+      this.cells[nextSnakeHeadCellRow][nextSnakeHeadCellCol].GetCellType() !==
+      CellType.FOOD
+    ) {
+      this.cells[nextSnakeHeadCellRow][nextSnakeHeadCellCol].SetCellType(
+        CellType.SNAKE
+      );
+      this.snakeCells.push(
+        new Cell(nextSnakeHeadCellRow, nextSnakeHeadCellCol)
+      );
 
       const snakeTailCell = this.snakeCells.shift();
       if (snakeTailCell) {
-        this.cells[snakeTailCell.GetRow()][snakeTailCell.GetCol()].SetCellType(CellType.EMPTY);
+        this.cells[snakeTailCell.GetRow()][snakeTailCell.GetCol()].SetCellType(
+          CellType.EMPTY
+        );
       }
     } else {
-      this.cells[nextSnakeHeadCellRow][nextSnakeHeadCellCol].SetCellType(CellType.SNAKE);
-      this.snakeCells.push(new Cell(nextSnakeHeadCellRow, nextSnakeHeadCellCol));
+      this.cells[nextSnakeHeadCellRow][nextSnakeHeadCellCol].SetCellType(
+        CellType.SNAKE
+      );
+      this.snakeCells.push(
+        new Cell(nextSnakeHeadCellRow, nextSnakeHeadCellCol)
+      );
       this.GenerateFoodCell();
       this.score++;
     }

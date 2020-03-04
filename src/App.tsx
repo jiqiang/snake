@@ -1,26 +1,32 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import { CellType, Board, Cell, Direction, DirectionKeyCodeMap, OppsiteDirectionKeyCodeMap } from "./types";
-import { useInterval } from './hooks';
+import {
+  CellType,
+  Board,
+  Cell,
+  Direction,
+  DirectionKeyCodeMap,
+  OppsiteDirectionKeyCodeMap
+} from "./types";
+import { useInterval } from "./hooks";
 
 let board = new Board(30, 30);
 
 const App = () => {
-
   const [cells, setCells] = useState<Cell[][]>(board.GetCells());
   const [direction, setDirection] = useState<Direction | undefined>(undefined);
   const [delay, setDelay] = useState<number | undefined>(undefined);
   const [touchStart, setTouchStart] = useState<[number, number]>([0, 0]);
 
   useEffect(() => {
-    document.addEventListener('keydown', handleDirectionChange);
-    document.addEventListener('touchstart', handleTouchStart);
-    document.addEventListener('touchend', handleTouchEnd);
+    document.addEventListener("keydown", handleDirectionChange);
+    document.addEventListener("touchstart", handleTouchStart);
+    document.addEventListener("touchend", handleTouchEnd);
     return () => {
-      document.removeEventListener('keydown', handleDirectionChange);
-      document.removeEventListener('touchstart', handleTouchStart);
-      document.removeEventListener('touchend', handleTouchEnd);
-    }
+      document.removeEventListener("keydown", handleDirectionChange);
+      document.removeEventListener("touchstart", handleTouchStart);
+      document.removeEventListener("touchend", handleTouchEnd);
+    };
   });
 
   const handleTouchStart = (e: TouchEvent) => {
@@ -33,15 +39,23 @@ const App = () => {
 
     if (Math.abs(horizontalDistance) <= Math.abs(verticalDistance)) {
       if (verticalDistance <= 0) {
-        document.dispatchEvent(new KeyboardEvent('keydown', { 'code': 'ArrowUp' }));
+        document.dispatchEvent(
+          new KeyboardEvent("keydown", { code: "ArrowUp" })
+        );
       } else {
-        document.dispatchEvent(new KeyboardEvent('keydown', { 'code': 'ArrowDown' }));
+        document.dispatchEvent(
+          new KeyboardEvent("keydown", { code: "ArrowDown" })
+        );
       }
     } else {
       if (horizontalDistance <= 0) {
-        document.dispatchEvent(new KeyboardEvent('keydown', { 'code': 'ArrowLeft' }));
+        document.dispatchEvent(
+          new KeyboardEvent("keydown", { code: "ArrowLeft" })
+        );
       } else {
-        document.dispatchEvent(new KeyboardEvent('keydown', { 'code': 'ArrowRight' }));
+        document.dispatchEvent(
+          new KeyboardEvent("keydown", { code: "ArrowRight" })
+        );
       }
     }
   };
@@ -99,7 +113,7 @@ const App = () => {
   };
 
   useInterval(() => {
-    console.log('tick');
+    console.log("tick");
     board.MoveSnake(direction);
     if (board.IsGameOver()) {
       setDelay(undefined);
@@ -124,16 +138,21 @@ const App = () => {
             {row.map((cell, colIdx) => (
               <div className="col" key={`col-${colIdx}`}>
                 <div
-                  className={`cell ${cell.GetCellType() === CellType.FOOD && "is-food"} ${cell.GetCellType() === CellType.SNAKE && "is-snake"} ${cell.GetCellType() === CellType.WALL && "is-wall"}`}
+                  className={`cell ${cell.GetCellType() === CellType.FOOD &&
+                    "is-food"} ${cell.GetCellType() === CellType.SNAKE &&
+                    "is-snake"} ${cell.GetCellType() === CellType.WALL &&
+                    "is-wall"}`}
                 ></div>
               </div>
             ))}
           </div>
         ))}
       </div>
-      <div className="restart" onClick={handleRestart}><button>Restart</button></div>
+      <div className="restart" onClick={handleRestart}>
+        <button>Restart</button>
+      </div>
     </>
   );
-}
+};
 
 export default App;

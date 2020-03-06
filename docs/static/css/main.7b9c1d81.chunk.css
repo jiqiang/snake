@@ -1,0 +1,2 @@
+.board{border-color:grey;outline:none;text-align:center;touch-action:none;-ms-touch-action:none}.row{display:inline-block}.cell{width:20px;height:20px}.is-food{background-color:red}.is-snake{background-color:#00f;border-radius:25px}.is-wall{background-color:#000}.restart,h3{text-align:center}button{border:1px solid grey}
+/*# sourceMappingURL=main.7b9c1d81.chunk.css.map */
